@@ -11,40 +11,37 @@
  */
 class Solution {
 private:
-    void preOrder(TreeNode* node, vector<int>& ans){
+    void postOrder(TreeNode* node, vector<int>& ans){
         if(node == NULL) return;
 
+        postOrder(node->left, ans);
+        postOrder(node->right, ans);
         ans.push_back(node->val);
-        preOrder(node->left, ans);
-        preOrder(node->right, ans);
     }
 public:
-    vector<int> preorderTraversal(TreeNode* root) {
-
-        // // Recursion
+    vector<int> postorderTraversal(TreeNode* root) {
+        // // Recursive
         // vector<int> ans;
-        // preOrder(root, ans);
+        // postOrder(root, ans);
         // return ans;
 
         // Iterative
         vector<int> ans;
-        if(root == NULL)
-            return ans;
-        stack<TreeNode*> st;
-        st.push(root);
+        if(root==NULL) return ans;
 
-        while(!st.empty()){
-            root = st.top();
-            st.pop();
-
+        stack<TreeNode*> st1;
+        st1.push(root);
+        while(!st1.empty()){
+            root = st1.top();
+            st1.pop();
             ans.push_back(root->val);
-            
-            if(root->right!=NULL)
-                st.push(root->right);
             if(root->left!=NULL)
-                st.push(root->left);
+                st1.push(root->left);
+            if(root->right!=NULL)
+                st1.push(root->right);
         }
-
+        
+        reverse(ans.begin(), ans.end());
         return ans;
     }
 };
