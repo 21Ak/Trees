@@ -9,18 +9,19 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
+
+// Apply any traversal technique and at each node check if it is same or not
 class Solution {
 private:
-    int height(TreeNode* node){
-        if(node==NULL) return 0;
+    bool isSame(TreeNode* p, TreeNode* q){
+        if(p==NULL || q==NULL)
+            return (p==q);
         
-        int lh = height(node->left);
-        int rh = height(node->right);
-
-        return 1+max(lh,rh);
+        if(p->val==q->val && isSame(p->left,q->left) && isSame(p->right, q->right)) return true;
+        else return false;
     }
 public:
-    int maxDepth(TreeNode* root) {
-        return height(root);
+    bool isSameTree(TreeNode* p, TreeNode* q) {
+        return isSame(p,q);
     }
 };
